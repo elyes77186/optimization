@@ -1,0 +1,49 @@
+# Implementation of Traveling Salesman Problem using Naive Approach
+# The program finds the shortest path that visits every vertex exactly once and returns to the starting vertex.
+
+from sys import maxsize               #importing the sys module to get maximum size of integer value
+from itertools import permutations    #importing the permutations module from itertools
+
+V = 4       # Number of vertices in the given graph
+
+# Implementation of traveling Salesman Problem function
+def travellingSalesmanProblem(graph, s):
+
+    # Store all vertex apart from source vertex
+    vertex = []
+    for i in range(V):
+        if i != s:
+            vertex.append(i)
+
+    # Store minimum weight Hamiltonian Cycle
+    min_path = maxsize
+    next_permutation=permutations(vertex)  #Generate all permutations of vertices
+    #print(next_permutation)
+    for i in next_permutation:
+        
+        # Store current Path weight(cost)
+        current_pathweight = 0
+
+        # Compute the current path weight
+        k = s
+        for j in i:
+            current_pathweight += graph[k][j]
+            k = j
+        current_pathweight += graph[k][s]
+
+        # Update minimum
+        min_path = min(min_path, current_pathweight)
+        print(i,current_pathweight)
+    return min_path
+
+
+# Driver Code
+if __name__ == "__main__":
+
+    # Matrix representation of graph
+    graph = [[0, 10, 15, 20], 
+                [10, 0, 35, 25],
+                [15, 35, 0, 30], 
+                [20, 25, 30, 0]]
+    s = 0
+    print("The minimum weight Hamiltonian Cycle:", travellingSalesmanProblem(graph, s)) # Prints the minimum weight Hamiltonian Cycle.
