@@ -1,0 +1,28 @@
+def subset_sum_recursive(nums, target, index, subset):
+    if target == 0:
+        print("Subset found:", subset)
+        return True
+    if target < 0 or index >= len(nums):
+        return False
+
+    # Include the current element in the subset
+    subset.append(nums[index])
+    if subset_sum_recursive(nums, target - nums[index], index + 1, subset):
+        return True
+
+    # Exclude the current element from the subset
+    subset.pop()
+    if subset_sum_recursive(nums, target, index + 1, subset):
+        return True
+
+    return False
+
+def subset_sum(nums, target):
+    subset = []
+    if not subset_sum_recursive(nums, target, 0, subset):
+        print("No subset found")
+
+# Example usage:
+nums = [3, 34, 4, 12, 5, 2]
+target = 9
+subset_sum(nums, target)
